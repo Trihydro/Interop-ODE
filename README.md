@@ -6,6 +6,8 @@ The purpose of this instance of the ODE is to provide users with the ability to 
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode)
 - [Asn1_codec Encoder Module (AEM)](https://github.com/usdot-jpo-ode/asn1_codec)
 
+To generate a message, a user can run the provided script `generate_tim.sh`. This script will generate a TIM message in UPER encoded hex format and save it to a file. The script relies on the ODE being started in order to generate the message.
+
 ## Prerequisites
 ### Docker
 This repository uses Docker to run the ODE. If you do not have Docker installed, you can download it [here](https://www.docker.com/products/docker-desktop).
@@ -37,6 +39,14 @@ docker compose ps
 ```bash
 docker compose logs ode --tail 100
 ```
+
+## How to generate messages
+To generate a message, run the following command:
+```bash
+./generate_tim.sh data/tim.json
+```
+
+A new file containing the UPER encoded hex message will be created in the same directory as the input file.
 
 ## How to stop the ODE
 Run the following command to stop the ODE:
