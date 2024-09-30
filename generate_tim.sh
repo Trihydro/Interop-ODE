@@ -12,8 +12,38 @@ fi
 
 filename=$1
 
-# retrieve IP address of the host machine
-export DOCKER_HOST_IP=$(ifconfig | grep -A 1 'inet ' | grep -v 'inet6\|127.0.0.1' | awk '{print $2}' | grep -E '^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-1]\.|^192\.168\.' | head -n 1)
+# Set up the .env file
+setupEnv() {
+  # if .env file does not exist, create it
+  if [ ! -f .env ]; then
+    echo "Setting up .env file..."
+    if [ -z $DOCKER_HOST_IP ]
+      then
+          export DOCKER_HOST_IP=$(ifconfig | grep -A 1 'inet ' | grep -v 'inet6\|127.0.0.1' | awk '{print $2}' | grep -E '^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-1]\.|^192\.168\.' | head -n 1)
+      fi
+      if [ -z $DOCKER_HOST_IP ]
+      then
+          echo "DOCKER_HOST_IP is not set and could not be determined. Exiting."
+          exit 1
+      fi
+
+      # write DOCKER_HOST_IP to .env
+      echo "DOCKER_HOST_IP=$DOCKER_HOST_IP" > .env
+
+      # write DOCKER_SHARED_VOLUME to .env
+      echo "DOCKER_SHARED_VOLUME=$PWD/shared" >> .env
+  elif [ -f .env ]; then
+    echo "Identified existing .env file..."
+  fi
+}
+
+# if .env exists, grab DOCKER_HOST_IP from it
+if [ -f .env ]; then
+    echo "Sourcing .env file..."
+    export $(cat .env | xargs)
+else
+    setupEnv
+fi
 
 validate_arguments() {
     if [ ! -f $filename ]; then
@@ -37,7 +67,7 @@ sendFileToOde() {
         exit 1
     fi
     echo "File sent successfully! Waiting for ODE to process the file..."
-    sleep 1
+    sleep 3
 }
 
 grabLatestLine() {
