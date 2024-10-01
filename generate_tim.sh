@@ -12,6 +12,15 @@ fi
 
 filename=$1
 
+ensureNetTools() {
+  echo "Checking if net-tools is installed..."
+  if ! [ -x "$(command -v netstat)" ]; then
+  echo "net-tools is not installed. Installing..."
+    sudo apt-get update
+    sudo apt-get install net-tools
+  fi
+}
+
 # Set up the .env file
 setupEnv() {
   # if .env file does not exist, create it
@@ -19,6 +28,7 @@ setupEnv() {
     echo "Setting up .env file..."
     if [ -z $DOCKER_HOST_IP ]
       then
+          ensureNetTools
           export DOCKER_HOST_IP=$(ifconfig | grep -A 1 'inet ' | grep -v 'inet6\|127.0.0.1' | awk '{print $2}' | grep -E '^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-1]\.|^192\.168\.' | head -n 1)
       fi
       if [ -z $DOCKER_HOST_IP ]
@@ -58,16 +68,26 @@ validate_arguments() {
 }
 
 sendFileToOde() {
-    # send file to ODE
-    echo "Sending $filename to ODE"
-    response=$(curl -X POST http://$DOCKER_HOST_IP:8080/tim -H 'Content-Type: application/json' --data "@$filename" 2>/dev/null)
-    # if "{"success":"true"}" not found in response
-    if [[ $response != *"{\"success\":\"true\"}"* ]]; then
-        echo "Failed to send file to ODE. Please try again."
-        exit 1
-    fi
-    echo "File sent successfully! Waiting for ODE to process the file..."
-    sleep 3
+    success=false
+    while [ $success == false ]; do
+        # check if ODE is running
+        if [ $(docker ps -q -f name=ode | wc -l) -eq 0 ]; then
+            echo "ODE is not running. Please start ODE first."
+            exit 1
+        fi
+        # send file to ODE
+        echo "Sending $filename to ODE"
+        response=$(curl -X POST http://$DOCKER_HOST_IP:8080/tim -H 'Content-Type: application/json' --data "@$filename" 2>/dev/null)
+        # if "{"success":"true"}" not found in response
+        if [[ $response != *"{\"success\":\"true\"}"* ]]; then
+            echo "Failed to send file to ODE. Trying again..."
+            sleep 3
+            continue
+        fi
+        echo "File sent successfully! Waiting for ODE to process the file..."
+        sleep 5
+        success=true
+    done
 }
 
 grabLatestLine() {
