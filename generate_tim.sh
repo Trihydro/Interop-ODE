@@ -41,7 +41,7 @@ setupEnv() {
       echo "DOCKER_HOST_IP=$DOCKER_HOST_IP" > .env
 
       # write DOCKER_SHARED_VOLUME to .env
-      echo "DOCKER_SHARED_VOLUME=$PWD/shared" >> .env
+      echo "DOCKER_SHARED_VOLUME=\"$PWD/shared\"" >> .env
   elif [ -f .env ]; then
     echo "Identified existing .env file..."
   fi
