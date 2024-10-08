@@ -48,6 +48,13 @@ To generate a message, run the following command:
 
 A new file containing the UPER encoded hex message will be created in the same directory as the input file.
 
+### Note 
+The `generate_tim.sh` script must not be run in parallel.
+
+Running the TIM generation script in multiple terminals simultaneously can lead to mismatches between the retrieved HEX and the input files. This occurs because the script captures the latest HEX output without confirming whether the decoded UPER message matches the original TIM JSON input.
+
+To avoid this issue, run the script in a single terminal and wait for the script to complete before running it again.
+
 ## How to stop the ODE
 Run the following command to stop the ODE:
 ```bash
