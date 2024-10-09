@@ -30,7 +30,12 @@ setupEnv() {
     if [ -z $DOCKER_HOST_IP ]
       then
           ensureNetTools
-          export DOCKER_HOST_IP=$(ifconfig | grep -A 1 'inet ' | grep -v 'inet6\|127.0.0.1' | awk '{print $2}' | grep -E '^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-1]\.|^192\.168\.' | head -n 1)
+          # call retrieve_docker_host_ip.sh to get DOCKER_HOST_IP
+          . retrieve_docker_host_ip.sh
+          if [ $? -ne 0 ]; then
+              echo "Failed to retrieve DOCKER_HOST_IP. Exiting."
+              exit 1
+          fi
       fi
       if [ -z $DOCKER_HOST_IP ]
       then
