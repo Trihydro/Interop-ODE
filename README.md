@@ -60,3 +60,6 @@ Run the following command to stop the ODE:
 ```bash
 docker compose down
 ```
+
+## Note on eth0
+In order to run the ODE in Docker, the `DOCKER_HOST_IP` environment variable must be set to the IP address of the machine running Docker. The provided scripts use the `retrieve_docker_host_ip.sh` script to retrieve the IP address of the machine running Docker. The `retrieve_docker_host_ip.sh` script targets the `eth0` interface to retrieve the IP address. If your machine uses a different interface, you will need to update the script to target the correct interface.
