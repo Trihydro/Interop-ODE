@@ -1,7 +1,7 @@
 # Interop-ODE
 This repository contains a pre-configured instance of the [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) for the October 2024 Inter-Op Testing Event.
 
-The purpose of this instance of the ODE is to provide users with the ability to generate messages in ASN.1 format. In order to do this, a subset of the ODE services have been configured to run in Docker containers. The services that are running in Docker containers are:
+The purpose of this instance of the ODE is to provide users with the ability to generate messages in UPER encoded hex format corresponding to the J2735 ASN.1 specification. In order to do this, a subset of the ODE services have been configured to run in Docker containers. The services that are running in Docker containers are:
 - [Kafka](https://kafka.apache.org/)
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode)
 - [Asn1_codec Encoder Module (AEM)](https://github.com/usdot-jpo-ode/asn1_codec)
