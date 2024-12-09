@@ -1,25 +1,18 @@
 {
   "request": {
-    "rsus": [
-      {
-        "rsuIndex": "10",
-        "rsuTarget": "127.0.0.2",
-        "rsuUsername": "v3user",
-        "rsuPassword": "password",
-        "rsuRetries": "1",
-        "rsuTimeout": "1000"
+    "sdw": {
+      "ttl": "oneday",
+      "recordId": "89201626",
+      "serviceRegion": {
+        "nwCorner": {
+          "latitude": "40.599896",
+          "longitude": "-105.087839"
+        },
+        "seCorner": {
+          "latitude": "40.534788",
+          "longitude": "-104.953856"
+        }
       }
-    ],
-    "snmp": {
-      "rsuid": "00000083",
-      "msgid": "31",
-      "mode": "1",
-      "channel": "178",
-      "interval": "2",
-      "deliverystart": "2017-06-01T17:47:11-05:00",
-      "deliverystop": "2018-01-01T17:47:11-05:15",
-      "enable": "1",
-      "status": "4"
     }
   },
   "tim": {

@@ -1,3 +1,5 @@
 .env
 *.uper
 *.json
+
+!data/**.json
