@@ -97,8 +97,6 @@ services:
       SPRING_MAIL_PORT: ${SPRING_MAIL_PORT}
     depends_on:
       - ode
-    volumes:
-      - ${DOCKER_SHARED_VOLUME}:/asn1_codec_share
     logging:
       options:
         max-size: "10m"
