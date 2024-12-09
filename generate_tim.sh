@@ -97,7 +97,7 @@ sendFileToOde() {
 
 grabLatestLine() {
     # grab latest line containing "Encoded message - phase 1:" from ODE logs
-    latest_line=$(docker compose logs ode | grep 'Encoded message - phase 1:' | tail -n 1)
+    latest_line=$(docker compose logs ode | grep 'Encoded message - phase ' | tail -n 1)
     if [ -z "$latest_line" ]; then
         echo "TIM not found in ODE logs. Please try again."
         exit 1
@@ -106,7 +106,7 @@ grabLatestLine() {
 
 extractHexValue() {
     # extract HEX value from the line
-    hex_value=$(echo $latest_line | grep -oP '(?<=Encoded message - phase 1: ).*')
+    hex_value=$(echo $latest_line | grep -oP '(?<=Encoded message - phase ).*')
     if [ -z "$hex_value" ]; then
         echo "Failed to extract HEX value from the line. Please try again."
         exit 1
