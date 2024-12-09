@@ -85,6 +85,24 @@ services:
         max-file: "5"
     restart: on-failure
 
+  sdx:
+    image: usdotjpoode/jpo-sdw-depositor:2024-q3
+    environment:
+      DOCKER_HOST_IP: ${DOCKER_HOST_IP}
+      SDW_DESTINATION_URL: ${SDW_DESTINATION_URL}
+      SDW_API_KEY: ${SDW_API_KEY}
+      SDW_EMAIL_LIST: ${SDW_EMAIL_LIST}
+      SDW_EMAIL_FROM: ${SDW_EMAIL_FROM}
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT}
+    depends_on:
+      - ode
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+    restart: on-failure
+
 volumes:
   kafka:
     {}

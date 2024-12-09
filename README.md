@@ -41,6 +41,8 @@ docker compose logs ode --tail 100
 ```
 
 ## How to generate messages
+Note: Ensure your .env file doesn't have comments as it is read in by the generate script with xargs and the comments will cause the script to fail.
+
 To generate a message, run the following command:
 ```bash
 ./generate_tim.sh data/tim.json
