@@ -69,7 +69,7 @@ startContainers() {
 checkIfContainersAreRunning() {
   echo "Checking if containers are running..."
   # check if kafka, ode & aem containers are running
-  if [ "$(docker ps -q -f name=ode)" ] && [ "$(docker ps -q -f name=kafka)" ] && [ "$(docker ps -q -f name=aem)" ]; then
+  if [ "$(docker ps -q -f name=ode)" ] && [ "$(docker ps -q -f name=kafka)" ] && [ "$(docker ps -q -f name=aem)" ] && [ "$(docker ps -q -f name=sdx)" ]; then
     echo "Most recent logs from the ODE container:"
     docker compose logs ode --tail 10
     echo ""
