@@ -106,7 +106,7 @@ grabLatestLine() {
 
 extractHexValue() {
     # extract HEX value from the line
-    hex_value=$(echo $latest_line | grep -oP '(?<=Encoded message - phase ).*')
+    hex_value=$(echo $latest_line | grep -oP '(?<=Encoded message - phase 1:).*')
     if [ -z "$hex_value" ]; then
         echo "Failed to extract HEX value from the line. Please try again."
         exit 1
